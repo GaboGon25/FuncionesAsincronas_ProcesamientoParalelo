@@ -19,7 +19,7 @@ namespace FuncionesAsincronas_ProcesamientoParalelo
 
         private void btnTextos_Click(object sender, EventArgs e)
         {
-            frmArchivosTextos frmArchivosTextos = new frmArchivosTextos();
+            FrmConversor frmArchivosTextos = new FrmConversor();
             frmArchivosTextos.ShowDialog();
         }
 
