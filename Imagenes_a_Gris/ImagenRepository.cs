@@ -8,13 +8,14 @@ namespace FuncionesAsincronas_ProcesamientoParalelo.Imagenes_a_Gris
 {
     public class ImagenRepository
     {
-        public async Task<Bitmap> ProcesarImagenAsync(string filePath)
+        public async Task ProcesarImagen(string inputFilePath, string outputFilePath)
         {
-            return await Task.Run(() =>
+            await Task.Run(() =>
             {
-                using (Bitmap originalImage = new Bitmap(filePath))
+                using (Bitmap ImagenOriginal = new Bitmap(inputFilePath))
                 {
-                    return ConvertirEscalaGris(originalImage);
+                    Bitmap EscalaGrisImagen = ConvertirEscalaGris(ImagenOriginal);
+                    EscalaGrisImagen.Save(outputFilePath);
                 }
             });
         }
@@ -36,5 +37,16 @@ namespace FuncionesAsincronas_ProcesamientoParalelo.Imagenes_a_Gris
 
             return EscalaGrisImagen;
         }
+
+        public string ObtenerRutaArchivoSalida(string inputFilePath)
+        {
+            string directory = System.IO.Path.GetDirectoryName(inputFilePath);
+            string fileName = System.IO.Path.GetFileNameWithoutExtension(inputFilePath);
+            string outputFileName = $"{fileName}_escalagris.jpg";
+            return System.IO.Path.Combine(directory, outputFileName);
+        }
+
+
+
     }
 }

@@ -27,18 +27,23 @@ namespace FuncionesAsincronas_ProcesamientoParalelo
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string filePath = openFileDialog.FileName;
+                string inputfilePath = openFileDialog.FileName;
+                string outputfilePath = imagenRepository.ObtenerRutaArchivoSalida(inputfilePath);
+                
 
                 try
                 {
-                    Bitmap processedImage = await imagenRepository.ProcesarImagenAsync(filePath);
-                    pbImagen.Image = processedImage;
+                    await imagenRepository.ProcesarImagen(inputfilePath, outputfilePath);
+                    MessageBox.Show("Procesamiento completado. Imagen en escala de grises guardada correctamente. Puede buscar su imagen a gris de donde lo obtuvo", "Completado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error processing image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Error al procesar la imagen: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
+
+        
+       
     }
 }
